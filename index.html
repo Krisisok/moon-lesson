@@ -129,8 +129,9 @@
     cursor:pointer;position:relative;transition:background-color .15s, transform .15s}
   .progress .seg::after{content:'';position:absolute;left:0;right:0;top:-11px;bottom:-11px}
   .progress .seg:hover{background:var(--muted);transform:scaleY(1.8)}
-  .progress .seg i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
-  .progress .seg.quiz i{background:var(--sage)}
+  /* išklausyta dalis - žalia (Armio prašymu); klausimai - tas pats žalias, šiek tiek blankesnis */
+  .progress .seg i{display:block;height:100%;background:var(--ok);transform:scaleX(0);transform-origin:0 50%}
+  .progress .seg.quiz i{background:var(--ok);opacity:.68}
   .note{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted);min-height:1.4em}
 
   @media (max-width:640px){
