@@ -1,4 +1,10 @@
-# Moon lesson — MVP
+# Mėnulio pamoka
+
+**Išbandyk: https://krisisok.github.io/moon-lesson/**
+
+Pamoka mokiniui apie Mėnulio fazes: sukasi vizualas, balsas pasakoja, gale — trys klausimai, į kuriuos atsakoma balsu. Pritaikyta disleksiją turintiems vaikams: pirmiausia vaizdas ir garsas, tekstas paryškinamas žodis po žodžio tiems, kas skaito.
+
+Du mygtukai: **LT/EN** ir **Start / Stop**. Pamoką pradeda ir Mėnulio palietimas. Apatinė juosta peršoka į bet kurią dalį.
 
 Maža pamoka mokiniui: vizualas + balsas + klausimai balsu.
 Pritaikyta disleksiją turintiems vaikams (vaizdas ir garsas pirmiau, tekstas — tik kas gerai skaito).
