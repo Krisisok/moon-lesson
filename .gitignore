@@ -1,0 +1,7 @@
+# ElevenLabs raktas - NIEKADA i repozitorija
+elevenlabs-key.txt
+*.key
+
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,198 @@
+{
+  "b3": [
+    {
+      "note": "dabartinis",
+      "text": "Visas fazių ratas trunka apie dvidešimt devynias su puse paros. Tai beveik vienas mėnuo.",
+      "say": "Visas fazių ratas trunka apie dvidešimt devynias su puse paros. Tai beveik vienas mėnuo."
+    },
+    {
+      "note": "be puses - paprasčiau skaičiui",
+      "text": "Visas fazių ratas trunka apie dvidešimt devynias paras. Tai beveik vienas mėnuo.",
+      "say": "Visas fazių ratas trunka apie dvidešimt devynias paras. Tai beveik vienas mėnuo."
+    },
+    {
+      "note": "skaičius atskirtas kableliais",
+      "text": "Visas fazių ratas trunka apie dvidešimt devynias su puse paros. Tai beveik vienas mėnuo.",
+      "say": "Visas fazių ratas trunka apie dvidešimt devynias, su puse paros. Tai beveik vienas mėnuo."
+    },
+    {
+      "note": "apvalinta: beveik trisdešimt",
+      "text": "Visas fazių ratas trunka beveik trisdešimt parų. Tai maždaug vienas mėnuo.",
+      "say": "Visas fazių ratas trunka beveik trisdešimt parų. Tai maždaug vienas mėnuo."
+    }
+  ],
+  "b4": [
+    {
+      "note": "dabartinis: Misijoje",
+      "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+      "say": "Misijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+    },
+    {
+      "note": "kirčio ženklas: Mìsijoje",
+      "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+      "say": "Mìsijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+    },
+    {
+      "note": "didžiosios: MIsijoje",
+      "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+      "say": "MIsijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+    },
+    {
+      "note": "dviguba priebalsė: Missijoje",
+      "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+      "say": "Missijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+    },
+    {
+      "note": "brūkšnelis: Mi-sijoje",
+      "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+      "say": "Mi-sijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+    },
+    {
+      "note": "ilgesnis pirmas balsis: Miisijoje",
+      "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+      "say": "Miisijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Kelionė trunka dešimt parų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+    }
+  ],
+  "q2": [
+    {
+      "note": "dabartinis",
+      "text": "Trečias klausimas. Kiek parų trunka misijos Artemis II kelionė aplink Mėnulį?",
+      "say": "Trečias klausimas. Kiek parų trunka misijos Artemis du kelionė aplink Mėnulį?"
+    },
+    {
+      "note": "be linksniavimo: misijos Artemis antroji",
+      "text": "Trečias klausimas. Kiek parų trunka misijos Artemis II kelionė aplink Mėnulį?",
+      "say": "Trečias klausimas. Kiek parų trunka misijos Artemis du kelionė aplink Mėnulį?"
+    },
+    {
+      "note": "pavadinimas sakinio gale",
+      "text": "Trečias klausimas. Kiek parų trunka kelionė aplink Mėnulį per misiją Artemis II?",
+      "say": "Trečias klausimas. Kiek parų trunka kelionė aplink Mėnulį per misiją Artemis du?"
+    }
+  ],
+  "b2": [
+    {
+      "note": "žodis NE sakinio gale + aštrusis kirtis",
+      "text": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia. Štai ir visos keturios.",
+      "say": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčiá. Štai ir visos keturios."
+    },
+    {
+      "note": "žodis ne gale + paprastas rašymas",
+      "text": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia. Štai ir visos keturios.",
+      "say": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia. Štai ir visos keturios."
+    },
+    {
+      "note": "pailgintas galas: delčiaa",
+      "text": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia.",
+      "say": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčiaa."
+    },
+    {
+      "note": "šauktukas: delčiá!",
+      "text": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia.",
+      "say": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčiá!"
+    },
+    {
+      "note": "brūkšnelis + aštrusis: del-čiá",
+      "text": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia.",
+      "say": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir del-čiá."
+    }
+  ],
+  "done3": [
+    {
+      "note": "žodis perkeltas į antrą vietą: Baigta pamokà",
+      "text": "Baigta pamoka. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą.",
+      "say": "Baigta pamokà. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą."
+    },
+    {
+      "note": "žodis sakinio viduryje: Tavo pamokà baigta",
+      "text": "Tavo pamoka baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą.",
+      "say": "Tavo pamokà baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą."
+    },
+    {
+      "note": "kirtis + pailginimas: Pamokàa",
+      "text": "Pamoka baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą.",
+      "say": "Pamokàa baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą."
+    },
+    {
+      "note": "su jaustuku: Viskas, pamokà baigta",
+      "text": "Viskas, pamoka baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą.",
+      "say": "Viskas, pamokà baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą."
+    },
+    {
+      "note": "be to žodžio: Šaunu! Baigta",
+      "text": "Šaunu! Baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą.",
+      "say": "Šaunu! Baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą."
+    }
+  ],
+  "done0": [
+    {
+      "note": "Nieko tokio! Baigta.",
+      "text": "Nieko tokio! Baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą.",
+      "say": "Nieko tokio! Baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą."
+    },
+    {
+      "note": "Štai ir viskas.",
+      "text": "Štai ir viskas. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą.",
+      "say": "Štai ir viskas. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą."
+    },
+    {
+      "note": "Gerai, baigta.",
+      "text": "Gerai, baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą.",
+      "say": "Gerai, baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą."
+    },
+    {
+      "note": "Puiku, kad pabandei!",
+      "text": "Puiku, kad pabandei! Baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą.",
+      "say": "Puiku, kad pabandei! Baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą."
+    }
+  ],
+  "ok2": [
+    {
+      "note": "žodis ne pabaigoje: + 'Tiek trunka visas skrydis.'",
+      "text": "Teisingai. Dešimt parų. Tiek trunka visas skrydis.",
+      "say": "Teisingai. Dešimt parų. Tiek trunka visas skrydis."
+    },
+    {
+      "note": "tildė: parų̃",
+      "text": "Teisingai. Dešimt parų.",
+      "say": "Teisingai. Dešimt parų̃."
+    },
+    {
+      "note": "šauktukas",
+      "text": "Teisingai. Dešimt parų.",
+      "say": "Teisingai. Dešimt parų!"
+    },
+    {
+      "note": "kitas žodis: dešimt dienų",
+      "text": "Teisingai. Dešimt dienų.",
+      "say": "Teisingai. Dešimt dienų."
+    }
+  ],
+  "no2": [
+    {
+      "note": "Skrydis trunka dešimt dienų",
+      "text": "Skrydis trunka dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato.",
+      "say": "Skrydis trunka dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato."
+    },
+    {
+      "note": "Jie skrenda dešimt dienų",
+      "text": "Jie skrenda dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato.",
+      "say": "Jie skrenda dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato."
+    },
+    {
+      "note": "Astronautai skrenda dešimt dienų",
+      "text": "Astronautai skrenda dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato.",
+      "say": "Astronautai skrenda dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato."
+    },
+    {
+      "note": "Tai trunka dešimt dienų",
+      "text": "Tai trunka dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato.",
+      "say": "Tai trunka dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato."
+    },
+    {
+      "note": "kita ir antra dalis: …nespėja apeiti viso rato",
+      "text": "Skrydis trunka dešimt dienų. Per tiek laiko Mėnulis nespėja apeiti viso rato.",
+      "say": "Skrydis trunka dešimt dienų. Per tiek laiko Mėnulis nespėja apeiti viso rato."
+    }
+  ]
+}

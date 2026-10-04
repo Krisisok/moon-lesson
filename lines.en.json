@@ -1,0 +1,29 @@
+{
+  "intro": "A lesson about the Moon. Tap the Moon and we will begin.",
+  "b0": "The Moon does not shine by itself. It reflects the light of the Sun, like a mirror.",
+  "b1": "The Sun always lights one half of the Moon. From Earth we see only part of that bright half.",
+  "b2": "So the Moon seems to change shape. These shapes are called phases: new moon, first quarter, full moon and last quarter.",
+  "b3": "The whole circle of phases takes about twenty nine and a half days. That is almost one month.",
+  "b4": {
+    "text": "In the Artemis II mission, four astronauts fly around the Moon. The journey takes ten days. In that time the Moon does not finish its circle of phases.",
+    "say": "In the Artemis two mission, four astronauts fly around the Moon. The journey takes ten days. In that time the Moon does not finish its circle of phases."
+  },
+  "q0": "First question. Does the Moon shine by itself?",
+  "ok0": "Correct. The Moon does not shine by itself. It reflects the light of the Sun.",
+  "no0": "Not quite. The Moon does not shine by itself. It only reflects the light of the Sun, like a mirror reflects a lamp.",
+  "q1": "Second question. What is the phase called when we see the whole bright Moon?",
+  "ok1": "Correct. That is the full moon.",
+  "no1": "It is called the full moon. Then the Sun lights exactly the side of the Moon that we see from Earth.",
+  "q2": {
+    "text": "Third question. How many days does the Artemis II journey around the Moon take?",
+    "say": "Third question. How many days does the Artemis two journey around the Moon take?"
+  },
+  "ok2": "Correct. Ten days.",
+  "no2": "The journey takes ten days. That is about one third of the whole circle of Moon phases.",
+  "again": "I did not hear you. Please say it again.",
+  "tap": "I cannot hear the microphone. Tap the correct answer.",
+  "done0": "Lesson finished. You answered 0 out of 3 correctly. Tap the Moon to do it again.",
+  "done1": "Lesson finished. You answered 1 out of 3 correctly. Tap the Moon to do it again.",
+  "done2": "Lesson finished. You answered 2 out of 3 correctly. Tap the Moon to do it again.",
+  "done3": "Lesson finished. You answered 3 out of 3 correctly. Tap the Moon to do it again."
+}

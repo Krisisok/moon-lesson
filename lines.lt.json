@@ -1,0 +1,32 @@
+{
+  "intro": "Pamoka apie Mėnulį. Paliesk Mėnulį ir pradėsime.",
+  "b0": "Mėnulis pats nešviečia. Jis atspindi Saulės šviesą, kaip veidrodis.",
+  "b1": "Saulė visada apšviečia vieną Mėnulio pusę. Iš Žemės matome tik dalį tos šviesios pusės.",
+  "b2": {
+    "text": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčia. Štai ir visos keturios.",
+    "say": "Todėl Mėnulis tarsi keičia formą. Tos formos vadinamos fazėmis: jaunatis, priešpilnis, pilnatis ir delčiá. Štai ir visos keturios."
+  },
+  "b3": "Visas fazių ratas trunka apie dvidešimt devynias su puse paros. Tai beveik vienas mėnuo.",
+  "b4": {
+    "text": "Misijoje Artemis II keturi astronautai skrenda aplink Mėnulį. Skrydis trunka dešimt dienų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato.",
+    "say": "Miisijoje Artemis du keturi astronautai skrenda aplink Mėnulį. Skrydis trunka dešimt dienų. Per tą laiką Mėnulis nespėja apeiti viso fazių rato."
+  },
+  "q0": "Pirmas klausimas. Ar Mėnulis šviečia pats?",
+  "ok0": "Teisingai. Mėnulis nešviečia pats. Jis atspindi Saulės šviesą.",
+  "no0": "Ne visai. Mėnulis pats nešviečia. Jis tik atspindi Saulės šviesą, kaip veidrodis atspindi lempą.",
+  "q1": "Antras klausimas. Kaip vadinama fazė, kai matome visą šviesų Mėnulį?",
+  "ok1": "Teisingai. Tai pilnatis.",
+  "no1": "Tai pilnatis. Pilnaties metu Saulė apšviečia būtent tą Mėnulio pusę, kurią matome iš Žemės.",
+  "q2": {
+    "text": "Trečias klausimas. Kiek dienų trunka misijos Artemis II skrydis aplink Mėnulį?",
+    "say": "Trečias klausimas. Kiek dienų trunka miisijos Artemis du skrydis aplink Mėnulį?"
+  },
+  "ok2": "Teisingai. Dešimt dienų.",
+  "no2": "Skrydis trunka dešimt dienų. Tai maždaug trečdalis viso Mėnulio fazių rato.",
+  "again": "Nieko negirdžiu. Pasakyk dar kartą.",
+  "tap": "Mikrofono negirdžiu. Paliesk teisingą atsakymą.",
+  "done0": "Puiku, kad pabandei! Baigta. Teisingai atsakei 0 iš 3. Paliesk Mėnulį ir pabandyk dar kartą.",
+  "done1": "Puiku, kad pabandei! Baigta. Teisingai atsakei 1 iš 3. Paliesk Mėnulį ir pabandyk dar kartą.",
+  "done2": "Šaunu! Baigta. Teisingai atsakei 2 iš 3. Paliesk Mėnulį, jei nori dar kartą.",
+  "done3": "Šaunu! Baigta. Teisingai atsakei 3 iš 3. Paliesk Mėnulį, jei nori dar kartą."
+}

@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Moon · lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F1E9; --ink:#2B2622; --muted:rgba(43,38,34,.62); --accent:#E4643B; --accent-soft:#FEE0D2;
+    --sage:#5F805F; --sky:#85B7D0; --indigo:#22253C; --amber:#F2B441; --paper-soft:rgba(246,241,233,.72);
+    --ok:#4F7B4F; --card:#FDFCF7; --line:rgba(43,38,34,.18); --track:rgba(43,38,34,.13);
+    --hl-ink:#8A3417;
+    --font:'Lexend', system-ui, -apple-system, sans-serif;
+    color-scheme:light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#18150F; --ink:#F3ECE1; --muted:rgba(243,236,225,.64); --accent:#F3885F;
+      --accent-soft:rgba(243,136,95,.26); --ok:#9CC79C; --card:#231E17;
+      --line:rgba(243,236,225,.22); --track:rgba(243,236,225,.16); --hl-ink:#FFD9C6;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#18150F; --ink:#F3ECE1; --muted:rgba(243,236,225,.64); --accent:#F3885F;
+    --accent-soft:rgba(243,136,95,.26); --ok:#9CC79C; --card:#231E17;
+    --line:rgba(243,236,225,.22); --track:rgba(243,236,225,.16); --hl-ink:#FFD9C6;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--font);
+            -webkit-font-smoothing:antialiased}
+  body{min-height:100vh;overflow-x:hidden}
+  .app{min-height:100vh;display:flex;flex-direction:column;width:100%;max-width:1000px;margin:0 auto;padding:16px 22px 22px}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:10px}
+  .brand{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  /* vienintelis mygtukas */
+  .btns{display:flex;gap:8px;align-items:center;flex:none}
+  #langBtn{font:600 14px/1 var(--font);letter-spacing:.1em;color:var(--muted);background:transparent;
+    border:1.5px solid var(--line);border-radius:999px;padding:12px 16px;cursor:pointer;min-width:56px}
+  #langBtn:hover{border-color:var(--accent);color:var(--accent)}
+  #langBtn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  #mainBtn{font:600 15px/1 var(--font);letter-spacing:.06em;color:var(--ink);background:var(--card);
+    border:1.5px solid var(--line);border-radius:999px;padding:12px 22px;cursor:pointer;min-width:118px}
+  #mainBtn:hover{border-color:var(--accent);color:var(--accent)}
+  #mainBtn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  #mainBtn.go{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+  .stage-wrap{display:flex;align-items:center;justify-content:center;min-height:0}
+  .stage{position:relative;width:100%;aspect-ratio:1100/600;max-height:46vh;border-radius:18px;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 46%, #2B2F4D 0%, var(--indigo) 58%, #1B1E31 100%);
+    user-select:none;-webkit-user-select:none;touch-action:none;transition:filter .4s ease}
+  body.paused .stage{filter:brightness(.62) saturate(.7)}
+  .stage.grab{cursor:grab} .stage.grab:active{cursor:grabbing}
+  .stage.tap{cursor:pointer}
+  .stage canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+  .ov{position:absolute;pointer-events:none;opacity:0;visibility:hidden}
+  .ov .eb{font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-soft);opacity:.85}
+  .ov .big{font-size:26px;font-weight:600;line-height:1.15;color:var(--paper);font-variant-numeric:tabular-nums}
+  #phaseBox{left:24px;top:18px}
+  #dayBox{right:24px;top:18px;text-align:right}
+  #dayBox .big small{font-size:16px;font-weight:500;color:var(--paper-soft);margin-left:4px}
+  #viewLabel,#dragHint{right:24px;bottom:16px;font-size:13px;letter-spacing:.05em;color:var(--paper-soft)}
+  #dragHint{color:var(--amber)}
+  #missionBox{left:24px;top:18px;max-width:46%}
+  #missionBox .big{font-size:22px}
+  #missionBox .sub{margin-top:6px;font-size:14px;line-height:1.5;color:var(--paper-soft)}
+  #glow{right:-190px;top:50%;width:460px;height:460px;margin-top:-230px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,180,65,.62) 0%, rgba(242,180,65,.22) 34%, rgba(242,180,65,0) 66%)}
+  #rays{left:0;top:0;width:100%;height:100%;overflow:visible}
+  #rays line{stroke:var(--amber);stroke-width:2.5;stroke-linecap:round}
+  #rays polygon{fill:var(--amber)}
+  #rays text{font-size:13px;font-weight:500;letter-spacing:.16em;fill:var(--amber);text-anchor:end}
+  #inset{left:20px;bottom:12px;width:270px;height:auto;overflow:visible}
+  #inset text{font-family:var(--font);font-size:12px;fill:var(--paper-soft)}
+  #inset .orbit{fill:none;stroke:var(--paper);stroke-opacity:.32;stroke-width:1.2;stroke-dasharray:3 4}
+  #inset .arc{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+  #inset .sunRay{stroke:var(--amber);stroke-opacity:.7;stroke-width:1.5;stroke-linecap:round}
+  #startHint{inset:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    opacity:1;visibility:visible;background:rgba(27,30,49,.45)}
+  #startHint span{font-size:21px;font-weight:500;color:var(--paper);background:rgba(43,38,34,.35);
+    border:1.5px solid rgba(246,241,233,.45);border-radius:999px;padding:14px 26px;animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.04);opacity:1}}
+
+  /* ——— lesson text: for students who read well ——— */
+  .panel{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:18px 2px 0;min-height:168px}
+  .narration{margin:0;font-size:25px;font-weight:400;line-height:1.72;letter-spacing:.012em;
+    max-width:52ch;text-align:left;text-wrap:pretty}
+  .narration .w{border-radius:5px;padding:1px 2px;margin:0 -1px;transition:background-color .12s linear}
+  .narration .w.on{background:var(--accent-soft);color:var(--hl-ink)}
+
+  .q{margin:0 0 14px;font-size:25px;font-weight:500;line-height:1.6;max-width:52ch}
+  .q .w{border-radius:5px;padding:1px 2px;margin:0 -1px}
+  .q .w.on{background:var(--accent-soft);color:var(--hl-ink)}
+  .mic{display:inline-flex;align-items:center;gap:12px;font-size:17px;color:var(--muted);min-height:34px}
+  .mic .dot{width:16px;height:16px;border-radius:50%;background:var(--track);flex:none}
+  .mic.live .dot{background:var(--accent);animation:beat 1.1s ease-in-out infinite}
+  .mic.live{color:var(--accent);font-weight:500}
+  @keyframes beat{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(228,100,59,.45)}50%{transform:scale(1.15);box-shadow:0 0 0 10px rgba(228,100,59,0)}}
+  .heard{margin:10px 0 0;font-size:20px;color:var(--muted);min-height:1.5em}
+  .heard b{font-weight:500;color:var(--ink)}
+  .feedback{margin:12px 0 0;font-size:22px;line-height:1.6;max-width:52ch;font-weight:400}
+  .feedback.good{color:var(--ok)} .feedback.bad{color:var(--ink)}
+  .feedback .mark{font-weight:600;margin-right:8px}
+  .feedback .w{border-radius:5px;padding:1px 2px}
+  .feedback .w.on{background:var(--accent-soft);color:var(--hl-ink)}
+  .choices{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .choices button{font:500 19px/1 var(--font);background:var(--card);border:1.5px solid var(--line);
+    border-radius:14px;padding:14px 20px;cursor:pointer;color:var(--ink)}
+  .choices button:hover{border-color:var(--accent);color:var(--accent)}
+
+  .progress{display:flex;gap:6px;margin:18px 0 8px}
+  .progress .seg{flex:1;height:4px;border-radius:2px;background:var(--track);overflow:hidden;
+    cursor:pointer;position:relative;transition:background-color .15s, transform .15s}
+  .progress .seg::after{content:'';position:absolute;left:0;right:0;top:-11px;bottom:-11px}
+  .progress .seg:hover{background:var(--muted);transform:scaleY(1.8)}
+  .progress .seg i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
+  .progress .seg.quiz i{background:var(--sage)}
+  .note{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted);min-height:1.4em}
+
+  @media (max-width:640px){
+    .app{padding:12px 14px 16px}
+    .brand{font-size:10.5px;letter-spacing:.12em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #mainBtn{padding:11px 14px;min-width:96px;font-size:13.5px}
+    #langBtn{padding:11px 12px;min-width:48px;font-size:13px}
+    .stage{aspect-ratio:1/.92;max-height:none;border-radius:14px}
+    .narration,.q{font-size:21px} .feedback{font-size:19px}
+    .ov .big{font-size:20px} #missionBox .big{font-size:18px} #missionBox .sub{font-size:13px}
+    #phaseBox{left:14px;top:12px} #dayBox{right:14px;top:12px} #missionBox{left:14px;top:12px;max-width:62%}
+    #inset{left:10px;bottom:8px;width:186px}
+    #viewLabel,#dragHint{right:14px;bottom:10px}
+    #startHint span{font-size:17px;padding:12px 20px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand" id="brand">EditAI · Science · Year 6</div>
+    <div class="btns">
+      <button id="langBtn" type="button" aria-label="Language">LT</button>
+      <button id="mainBtn" type="button">▶ Start</button>
+    </div>
+  </header>
+
+  <div class="stage-wrap">
+    <div class="stage tap" id="stage" role="img" aria-label="A model of the Moon">
+      <div class="ov" id="glow"></div>
+      <svg class="ov" id="rays" viewBox="0 0 1100 600" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <text x="1050" y="196" id="raysLabel">SUNLIGHT</text>
+        <g id="rayLines">
+          <line x1="1060" y1="250" x2="800" y2="250" pathLength="1"/>
+          <line x1="1060" y1="300" x2="800" y2="300" pathLength="1"/>
+          <line x1="1060" y1="350" x2="800" y2="350" pathLength="1"/>
+        </g>
+        <g id="rayHeads">
+          <polygon points="786,250 806,241 806,259"/>
+          <polygon points="786,300 806,291 806,309"/>
+          <polygon points="786,350 806,341 806,359"/>
+        </g>
+      </svg>
+      <div class="ov" id="phaseBox"><div class="eb" id="phaseEb">Phase</div><div class="big" id="phaseName">New Moon</div></div>
+      <div class="ov" id="dayBox"><div class="eb" id="dayEb">Day</div><div class="big" id="dayNum">1</div></div>
+      <div class="ov" id="missionBox"><div class="eb">Artemis II</div><div class="big" id="missionTitle">A journey around the Moon</div><div class="sub" id="missionSub">4 astronauts · 10 days</div></div>
+      <svg class="ov" id="inset" viewBox="0 0 300 156" aria-hidden="true">
+        <g id="insetSun">
+          <circle cx="-6" cy="80" r="40" fill="#F2B441"/>
+          <line class="sunRay" x1="44" y1="58" x2="56" y2="52"/>
+          <line class="sunRay" x1="47" y1="80" x2="60" y2="80"/>
+          <line class="sunRay" x1="44" y1="102" x2="56" y2="108"/>
+          <text x="20" y="140" text-anchor="middle" id="insetSunLbl">Sun</text>
+        </g>
+        <circle class="orbit" cx="180" cy="80" r="54"/>
+        <circle class="arc" id="insetArc" cx="180" cy="80" r="54" pathLength="1" transform="rotate(180 180 80)"/>
+        <text x="236" y="146" text-anchor="middle" id="insetOrbitLbl">Moon's orbit</text>
+        <g id="insetEarth">
+          <circle cx="180" cy="80" r="10" fill="#85B7D0"/>
+          <path d="M180,70 A10,10 0 0 1 180,90 Z" fill="#22253C" fill-opacity=".5"/>
+          <text x="180" y="106" text-anchor="middle" id="insetEarthLbl">Earth</text>
+        </g>
+        <g id="insetMoon">
+          <circle cx="0" cy="0" r="6.5" fill="#F6F1E9" fill-opacity=".16"/>
+          <path d="M0,-6.5 A6.5,6.5 0 0 0 0,6.5 Z" fill="#F6F1E9"/>
+        </g>
+      </svg>
+      <div class="ov" id="viewLabel">View from Earth</div>
+      <div class="ov" id="dragHint">↔ drag</div>
+      <div class="ov" id="startHint"><span id="startHintText">▶ Tap the Moon</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="narration" id="narration" aria-live="polite"></p>
+    <div id="quiz" hidden>
+      <p class="q" id="qText"></p>
+      <div class="mic" id="mic"><span class="dot"></span><span id="micLabel"></span></div>
+      <p class="heard" id="heard"></p>
+      <p class="feedback" id="feedback"></p>
+      <div class="choices" id="choices" hidden></div>
+    </div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <p class="note" id="note"></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { MOON_TEXTURES } from './moon-assets.js';
+
+/* ═══════════ 1. THE LESSON ═══════════
+   Visual: Moon phases (NASA CGI Moon Kit).
+   Content extended from the EditAI library project
+   "Artemis II: The 10-Day Survival Challenge" (Year 6 · The World Around Us):
+   4 astronauts, 10 days, 700,000 miles around the Moon.
+   Lithuanian version is parked until we have a good Lithuanian voice. */
+
+let lang = 'en';                  // perjungiamas LT/EN mygtuku
+let LINES = { en:{}, lt:{} };     // kalbami sakiniai - is lines.<lang>.json
+let AUDIO = { en:{}, lt:{} };     // irasyti mp3, jei yra (zr. build-audio.py)
+
+const UI = {
+  en: {
+    brand: 'EditAI · Science · Year 6',
+    phases: ['New Moon','First Quarter','Full Moon','Last Quarter'],
+    ui: { phase:'Phase', day:'Day', rays:'SUNLIGHT', sun:'Sun', earth:'Earth', orbit:"Moon's orbit",
+          fromEarth:'View from Earth', fromSide:'View from the side', drag:'↔ drag',
+          mission:'A journey around the Moon', missionSub:'4 astronauts · 10 days',
+          start:'▶ Tap the Moon', listening:'Listening…', heard:'I heard: ',
+          btnStart:'▶ Start', btnStop:'■ Stop', btnResume:'▶ Resume',
+          paused:'Lesson stopped. Press Resume to continue.' },
+    answers: [
+      { accept:['no','does not','doesnt','dont','reflects','reflect'],
+        choices:[{t:'Yes',ok:false},{t:'No',ok:true}] },
+      { accept:['full','full moon','fullmoon'],
+        choices:[{t:'New moon',ok:false},{t:'Full moon',ok:true},{t:'Last quarter',ok:false}] },
+      { accept:['10','ten'],
+        choices:[{t:'3',ok:false},{t:'10',ok:true},{t:'30',ok:false}] }
+    ],
+    noMic: 'No microphone here. Tap your answer.',
+    micNote: '',   // uzuominos apie mikrofona nerodome
+    noVoiceNote: 'No voice found on this computer – the lesson still runs and the text is highlighted.'
+  },
+  lt: {
+    brand: 'EditAI · Gamtos mokslai · 6 klasė',
+    phases: ['Jaunatis','Priešpilnis','Pilnatis','Delčia'],
+    ui: { phase:'Fazė', day:'Para', rays:'SAULĖS ŠVIESA', sun:'Saulė', earth:'Žemė', orbit:'Mėnulio orbita',
+          fromEarth:'Vaizdas iš Žemės', fromSide:'Vaizdas iš šono', drag:'↔ pasuk',
+          mission:'Kelionė aplink Mėnulį', missionSub:'4 astronautai · 10 dienų',
+          start:'▶ Paliesk Mėnulį', listening:'Klausau…', heard:'Išgirdau: ',
+          btnStart:'▶ Pradėti', btnStop:'■ Stop', btnResume:'▶ Tęsti',
+          paused:'Pamoka sustabdyta. Spausk „Tęsti".' },
+    answers: [
+      { accept:['ne','nesviecia','atspindi'],
+        choices:[{t:'Taip',ok:false},{t:'Ne',ok:true}] },
+      { accept:['pilnatis','pilnati','pilnaties','pilnas'],
+        choices:[{t:'Jaunatis',ok:false},{t:'Pilnatis',ok:true},{t:'Delčia',ok:false}] },
+      { accept:['10','desimt','desimts'],
+        choices:[{t:'3',ok:false},{t:'10',ok:true},{t:'30',ok:false}] }
+    ],
+    noMic: 'Mikrofono nėra. Paliesk atsakymą.',
+    micNote: '',   // uzuominos apie mikrofona nerodome
+    noVoiceNote: 'Balso šiame kompiuteryje nėra – pamoka veikia, tekstas rodomas ir paryškinamas.'
+  }
+};
+
+let T = UI[lang];                       // etiketes, atsakymai
+/* Sakinys gali buti tekstas arba {text, say}: "text" mato mokinys,
+   "say" skaito balsas (tam, kad butu galima pataisyti kirciavima). */
+const entry = id => LINES[lang][id];
+const L   = id => { const e = entry(id); return (e && e.text) || e || ''; };
+const SAY = id => { const e = entry(id); return (e && (e.say || e.text)) || e || ''; };
+
+const BEATS = [
+  { id:'sun',     dur:7,  phase:90  },
+  { id:'side',    dur:11, phase:0, cameraArc:90 },
+  { id:'phases',  dur:16, sweep:[0,360] },
+  { id:'cycle',   dur:13, sweep:[0,360] },
+  { id:'artemis', dur:15, phase:180 }
+];
+const CYCLE_DAYS = 29.5;
+const NQ = 3;
+
+/* ═══════════ 2. State ═══════════ */
+let mode = 'intro';          // intro | lesson | quiz | done
+let cur = 0, qi = 0, score = 0;
+let paused = false, resumeAction = null, wasListening = false;
+let listenSeq = 0, answered = false;   // kad velai ateje mikrofono ivykiai nebeperpiestu klausimo
+
+const $ = id => document.getElementById(id);
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D = s => RM ? 0.01 : s;
+const noteEl = $('note'), mainBtn = $('mainBtn');
+const DIAG = /[?&]diag/.test(location.search);   // ?diag=1 - diagnostika
+
+/* ——— Diagnostika: ar narsykle is viso gauna garsa is mikrofono ——— */
+let diagEl = null, diagLevel = -1, diagTrail = [];
+function diagLine(){
+  if (!DIAG) return;
+  if (!diagEl){
+    diagEl = document.createElement('p');
+    diagEl.className = 'note';
+    diagEl.style.color = 'var(--accent)';
+    diagEl.style.fontVariantNumeric = 'tabular-nums';
+    noteEl.after(diagEl);
+  }
+  const bar = diagLevel < 0 ? '—' : '█'.repeat(Math.min(20, Math.round(diagLevel / 3))) || '·';
+  diagEl.textContent = 'mikrofonas ' + (diagLevel < 0 ? '(nematuojama)' : diagLevel.toString().padStart(3))
+    + ' ' + bar + '   ' + diagTrail.join(' → ') + (micWhy ? '  ·  ' + micWhy : '');
+}
+async function micMeter(){
+  if (!DIAG || micMeter.started) return;
+  micMeter.started = true;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const an = ctx.createAnalyser(); an.fftSize = 512;
+    ctx.createMediaStreamSource(stream).connect(an);
+    const buf = new Uint8Array(an.fftSize);
+    const tick = () => {
+      an.getByteTimeDomainData(buf);
+      let peak = 0;
+      for (const v of buf) peak = Math.max(peak, Math.abs(v - 128));
+      diagLevel = peak; diagLine();
+      requestAnimationFrame(tick);
+    };
+    tick();
+  } catch(e){
+    diagTrail = ['getUserMedia: ' + e.name]; diagLine();
+  }
+}
+
+/* ═══════════ 3. Voice out ═══════════ */
+let voices = [];
+const loadVoices = () => { voices = window.speechSynthesis ? speechSynthesis.getVoices() : []; };
+if (window.speechSynthesis){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function voiceFor(l){
+  const m = voices.filter(v => (v.lang||'').toLowerCase().replace('_','-').startsWith(l));
+  return m.find(v => /google/i.test(v.name)) || m.find(v => v.localService) || m[0] || null;
+}
+let speakToken = 0, fakeTimer = null, fakeState = null, rafId = 0;
+
+/* Vienas grotuvas visai pamokai. Telefonuose (ypac iOS) naujas Audio elementas,
+   sukurtas ne paspaudimo metu, groti neleidziamas - todel sakiniai nutrukdavo
+   po pirmo ar antro. Vienas, paspaudimu "atrakintas" elementas groja visus. */
+const player = new Audio();
+player.preload = 'auto';
+let curAudio = null;                 // = player, kol kazkas groja
+const SILENCE = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+function unlockAudio(){              // kviesti TIK is naudotojo paspaudimo
+  if (unlockAudio.done) return;
+  unlockAudio.done = true;
+  try {
+    player.src = SILENCE;
+    const p = player.play();
+    if (p && p.then) p.then(() => player.pause()).catch(() => {});
+  } catch(e){}
+}
+let ttsServer = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+// the local /tts voice (ElevenLabs or Google) only exists when server.py is running;
+// published copies fall back to the browser's own English voice
+
+function stopSpeak(){
+  speakToken++;
+  if (fakeTimer){ clearInterval(fakeTimer); fakeTimer = null; }
+  fakeState = null;
+  if (rafId){ cancelAnimationFrame(rafId); rafId = 0; }
+  if (curAudio){
+    try { player.onerror = player.onended = player.onplaying = null; player.pause(); } catch(e){}
+    curAudio = null;
+  }
+  if (window.speechSynthesis) try { speechSynthesis.cancel(); } catch(e){}
+}
+
+/* word highlighting follows the audio clock (longer word – longer highlight) */
+function karaoke(audio, text, onWord, my){
+  if (!onWord) return;
+  const words = text.split(/\s+/).filter(Boolean);
+  const wt = words.map(w => w.length + 1);
+  const total = wt.reduce((a, b) => a + b, 0);
+  const starts = []; let acc = 0;
+  for (const w of wt){ starts.push(acc / total); acc += w; }
+  const step = () => {
+    if (my !== speakToken || !curAudio) return;
+    const d = curAudio.duration;
+    if (d > 0){
+      const f = curAudio.currentTime / d;
+      let k = 0; while (k + 1 < starts.length && starts[k + 1] <= f) k++;
+      onWord(k, words.length);
+    }
+    rafId = requestAnimationFrame(step);
+  };
+  rafId = requestAnimationFrame(step);
+}
+
+/* fallback: system voice, or silent word-by-word reading */
+function runFake(){
+  const st = fakeState;
+  fakeTimer = setInterval(() => {
+    if (st.my !== speakToken) return clearInterval(fakeTimer);
+    if (st.i >= st.words.length){
+      clearInterval(fakeTimer); fakeTimer = null; fakeState = null;
+      if (st.onEnd) st.onEnd(); return;
+    }
+    st.onWord && st.onWord(st.i, st.words.length);
+    st.i++;
+  }, RM ? 10 : 290);
+}
+function speakLocal(text, onWord, onEnd, my){
+  const done = () => { if (my === speakToken && onEnd) onEnd(); };
+  const v = voiceFor(lang);
+  if (!window.speechSynthesis || !v){
+    fakeState = { words:text.split(/\s+/).filter(Boolean), i:0, onWord, onEnd:done, my };
+    runFake(); return;
+  }
+  const words = text.split(/\s+/).filter(Boolean);
+  const starts = []; let pos = 0;
+  for (const w of words){ const i = text.indexOf(w, pos); starts.push(i); pos = i + w.length; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.voice = v; u.lang = v.lang; u.rate = .92; u.pitch = 1;
+  u.onboundary = e => {
+    if (my !== speakToken || !onWord) return;
+    const c = e.charIndex || 0;
+    let k = 0; while (k + 1 < starts.length && starts[k + 1] <= c) k++;
+    onWord(k, words.length);
+  };
+  u.onend = done; u.onerror = done;
+  speechSynthesis.speak(u);
+}
+
+function speak(text, { onWord, onEnd } = {}, id){
+  stopSpeak();
+  const my = speakToken;
+  const done = () => { if (my === speakToken && onEnd) onEnd(); };
+  const pre = id && AUDIO[lang][id];
+  const src = pre || (ttsServer ? '/tts?tl=' + lang + '&q=' + encodeURIComponent(text) : null);
+  if (!src) return speakLocal(text, onWord, onEnd, my);
+
+  curAudio = player;
+  player.onplaying = () => { if (my === speakToken) karaoke(player, text, onWord, my); };
+  player.onended = done;
+  const fail = () => {
+    if (my !== speakToken) return;
+    curAudio = null;
+    if (pre){ delete AUDIO[lang][id]; return speak(text, { onWord, onEnd }, id); }   // iraso nera – bandome kitaip
+    ttsServer = false;
+    noteEl.textContent = voiceFor(lang) ? T.micNote : T.noVoiceNote;
+    speakLocal(text, onWord, onEnd, my);
+  };
+  player.onerror = fail;
+  try { player.src = src; player.currentTime = 0; } catch(e){}
+  const p = player.play();
+  if (p && p.catch) p.catch(fail);
+}
+
+/* ═══════════ 4. Lesson text with highlighting ═══════════ */
+const narrationEl = $('narration');
+let wordSpans = [], wordStarts = [];
+function renderText(el, text){
+  el.innerHTML = ''; wordSpans = []; wordStarts = [];
+  let idx = 0;
+  for (const part of text.split(/(\s+)/)){
+    if (!part) continue;
+    if (/^\s+$/.test(part)){ el.appendChild(document.createTextNode(part)); idx += part.length; continue; }
+    const s = document.createElement('span'); s.className = 'w'; s.textContent = part;
+    el.appendChild(s); wordSpans.push(s); wordStarts.push(idx); idx += part.length;
+  }
+}
+function markWord(i, total){
+  const n = wordSpans.length;
+  if (!n) return;
+  // jei skaitomas ir rodomas tekstas sutampa - zodis i zodi; jei ne - proporcingai
+  const k = (!total || total === n) ? Math.min(i, n - 1)
+                                    : Math.min(n - 1, Math.floor(i * n / total));
+  wordSpans.forEach((s, j) => s.classList.toggle('on', j === k));
+}
+const clearMarks = () => wordSpans.forEach(s => s.classList.remove('on'));
+
+/* ═══════════ 5. Voice in ═══════════ */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let micReady = null, micWhy = '';   // null - nebandyta, true - leista, false - neleista
+
+/* Leidimo klausiame TIK is naudotojo paspaudimo (Start / Mėnulis).
+   Vėliau, pasibaigus įrašui, naršyklė tokio prašymo nebepriimtų. */
+async function askMic(){
+  if (micReady !== null) return micReady;
+  if (!SR || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    micReady = false; return false;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+    stream.getTracks().forEach(t => t.stop());   // leidimo uztenka, srauto nelaikome
+    micReady = true;
+  } catch(e){
+    micReady = false;
+    micWhy = e.name === 'NotAllowedError'
+      ? 'Mikrofonas uždraustas šiam puslapiui. Adreso juostoje spausk piktogramą kairėje → Microphone → Allow (arba Reset permissions), tada perkrauk puslapį.'
+      : e.name === 'NotFoundError' ? 'Mikrofono įrenginio nerasta.'
+      : e.name === 'NotReadableError' ? 'Mikrofoną užėmusi kita programa.'
+      : 'Mikrofonas neprieinamas (' + e.name + ').';
+    if (DIAG){ diagTrail = ['leidimas: ' + e.name]; diagLine(); diagEl && (diagEl.title = micWhy); }
+  }
+  return micReady;
+}
+let rec = null, recTimer = null;
+function listen({ onPartial, onResult, onFail }){
+  if (!SR) return onFail('nosupport');
+  try { rec = new SR(); } catch(e){ return onFail('nosupport'); }
+  rec.lang = lang === 'lt' ? 'lt-LT' : 'en-US';
+  rec.interimResults = true; rec.maxAlternatives = 3; rec.continuous = false;
+  let got = false, alts = [];
+  rec.onresult = e => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++){
+      const r = e.results[i];
+      if (r.isFinal){ got = true; for (let j = 0; j < r.length; j++) alts.push(r[j].transcript); }
+      else interim += r[0].transcript;
+    }
+    if (interim) onPartial && onPartial(interim);
+    if (got){ stopListen(); onResult(alts); }
+  };
+  if (DIAG){
+    diagTrail = [];
+    ['start','audiostart','soundstart','speechstart','speechend','soundend','audioend','end','nomatch']
+      .forEach(ev => rec.addEventListener(ev, () => { diagTrail.push(ev); diagLine(); }));
+    micMeter();
+  }
+  rec.onerror = e => { stopListen(); if (!got) onFail(e.error || 'error'); };
+  rec.onend = () => { clearTimeout(recTimer); if (!got) onFail('nomatch'); };
+  try { rec.start(); } catch(e){ return onFail('error'); }
+  recTimer = setTimeout(() => { try { rec && rec.stop(); } catch(e){} }, 11000);
+}
+function stopListen(){
+  clearTimeout(recTimer);
+  if (rec){ try { rec.onend = null; rec.stop(); } catch(e){} rec = null; }
+}
+
+/* ═══════════ 6. Checking the answer ═══════════ */
+const strip = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .replace(/[^a-z0-9]+/g, ' ').trim();
+function isCorrect(texts, accept){
+  for (const t of texts){
+    const words = ' ' + strip(t) + ' ';
+    for (const a of accept){ if (words.includes(' ' + strip(a) + ' ')) return true; }
+  }
+  return false;
+}
+
+/* ═══════════ 7. The visual (same three.js engine as moon/index.html) ═══════════ */
+const stage = $('stage');
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true, powerPreference:'low-power' });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+renderer.setClearColor(0x000000, 0);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+stage.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, .1, 100);
+const CAM_D = 5.4;
+const sun = new THREE.DirectionalLight(0xFFF1DC, 4.8);
+scene.add(sun); scene.add(new THREE.AmbientLight(0x5A5F8C, .55));
+
+const loader = new THREE.TextureLoader();
+const [map, height] = await Promise.all([
+  loader.loadAsync(MOON_TEXTURES.color), loader.loadAsync(MOON_TEXTURES.height)
+]);
+map.colorSpace = THREE.SRGBColorSpace;
+map.anisotropy = height.anisotropy = renderer.capabilities.getMaxAnisotropy();
+const moon = new THREE.Mesh(new THREE.SphereGeometry(1, 192, 128), new THREE.MeshStandardMaterial({
+  map, bumpMap:height, bumpScale:.02, displacementMap:height, displacementScale:.03, displacementBias:-.015,
+  roughness:1, metalness:0
+}));
+moon.rotation.y = -Math.PI / 2;
+const moonGroup = new THREE.Group(); moonGroup.add(moon); scene.add(moonGroup);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true;
+controls.dampingFactor = .08; controls.rotateSpeed = .55; controls.enabled = false;
+
+const S = { phi:90, camA:0, camEl:0, spin:0 };
+const rad = d => d * Math.PI / 180;
+const norm = a => ((a % 360) + 360) % 360;
+function resize(){
+  const w = stage.clientWidth, h = stage.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.fov = w / h < 1 ? 42 : 30;
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage); resize();
+
+const phaseName = $('phaseName'), dayNum = $('dayNum'), insetMoon = $('insetMoon'), insetArc = $('insetArc');
+const phaseFor = a => T.phases[Math.floor(norm(a + 45) / 90) % 4];
+const ordinalLT = n => n + (n % 10 === 3 && n % 100 !== 13 ? '-ioji' : '-oji');
+const swapText = (el, txt) => {
+  if (el.textContent === txt) return;
+  el.textContent = txt;
+  el.animate([{ opacity:0, transform:'translateY(5px)' }, { opacity:1, transform:'none' }], { duration: RM ? 0 : 420, easing:'ease-out' });
+};
+let cycleT0 = 0;
+function overlays(){
+  const a = S.phi;
+  swapText(phaseName, phaseFor(a));
+  const th = Math.PI + rad(a);
+  insetMoon.setAttribute('transform', `translate(${(180 + 54 * Math.cos(th)).toFixed(2)} ${(80 + 54 * Math.sin(th)).toFixed(2)})`);
+  const frac = Math.max(0, Math.min(1, (a - cycleT0) / 360));
+  insetArc.style.strokeDashoffset = String(1 - frac);
+  if (frac >= .999){
+    dayNum.innerHTML = lang === 'lt' ? '≈ 29,5 <small>paros</small>' : '≈ 29.5 <small>days</small>';
+  } else {
+    const d = Math.min(29, Math.floor(frac * CYCLE_DAYS) + 1);
+    const t = lang === 'lt' ? ordinalLT(d) : String(d);
+    if (dayNum.textContent !== t) dayNum.textContent = t;
+  }
+}
+function frame(){
+  requestAnimationFrame(frame);
+  const p = rad(S.phi);
+  sun.position.set(Math.sin(p) * 10, 1.2, -Math.cos(p) * 10);
+  moonGroup.rotation.y = S.spin;
+  if (controls.enabled) controls.update();
+  else {
+    const a = rad(S.camA), e = rad(S.camEl);
+    camera.position.set(CAM_D * Math.sin(a) * Math.cos(e), CAM_D * Math.sin(e), CAM_D * Math.cos(a) * Math.cos(e));
+    camera.lookAt(0, 0, 0);
+  }
+  renderer.render(scene, camera);
+  overlays();
+}
+frame();
+
+/* ═══════════ 8. Beats ═══════════ */
+const OV = { glow:$('glow'), rays:$('rays'), phaseBox:$('phaseBox'), dayBox:$('dayBox'), inset:$('inset'),
+             viewLabel:$('viewLabel'), dragHint:$('dragHint'), mission:$('missionBox'), start:$('startHint') };
+const allOv = Object.values(OV);
+const rayLines = [...document.querySelectorAll('#rayLines line')], rayHeads = $('rayHeads'), rayText = document.querySelector('#rays text');
+const progEl = $('progress');
+const segs = [];
+for (let i = 0; i < BEATS.length + NQ; i++){
+  const s = document.createElement('div'); s.className = 'seg' + (i >= BEATS.length ? ' quiz' : '');
+  s.title = i < BEATS.length ? ('Pamokos dalis ' + (i + 1)) : (i - BEATS.length + 1) + ' klausimas';
+  s.addEventListener('click', () => jumpTo(i));
+  const b = document.createElement('i'); s.appendChild(b); progEl.appendChild(s); segs.push(b);
+}
+const setProgress = n => segs.forEach((s, j) => gsap.set(s, { scaleX: j < n ? 1 : 0 }));
+
+let tl = null;
+const nearest = t => t + 360 * Math.round((S.phi - t) / 360);
+const show = (t, els, on, at) => t.to(els, { autoAlpha: on ? 1 : 0, duration:D(.6), ease:'power1.inOut' }, at);
+const drawRays = (t, at) => {
+  t.set(rayLines, { strokeDasharray:1, strokeDashoffset:1 }, at);
+  t.set([rayHeads, rayText], { opacity:0 }, at);
+  show(t, OV.rays, true, at);
+  t.to(rayLines, { strokeDashoffset:0, duration:D(1.1), stagger:.14, ease:'power2.inOut' }, at + .2);
+  t.to(rayHeads, { opacity:1, duration:D(.4) }, at + 1.1);
+  t.to(rayText, { opacity:1, duration:D(.5) }, at + .8);
+};
+const viewText = (t, key, at) => t.call(() => swapText(OV.viewLabel, T.ui[key]), null, at);
+
+function resetStage(){
+  gsap.killTweensOf([S, ...allOv, ...rayLines, rayHeads, rayText, insetArc]);
+  if (controls.enabled){
+    const p = camera.position;
+    S.camA = Math.atan2(p.x, p.z) * 180 / Math.PI;
+    S.camEl = Math.asin(Math.max(-1, Math.min(1, p.y / p.length()))) * 180 / Math.PI;
+  }
+  controls.enabled = false;
+  stage.classList.remove('grab');
+  S.phi = norm(S.phi);
+}
+
+function buildBeat(i){
+  if (tl) tl.kill();
+  const beat = BEATS[i];
+  resetStage();
+  tl = gsap.timeline();
+  const home = { camA:0, camEl:0, spin: 2 * Math.PI * Math.round(S.spin / (2 * Math.PI)), duration:D(1.2), ease:'power2.inOut' };
+  const hide = els => show(tl, els, false, 0);
+
+  switch (beat.id){
+    case 'sun':
+      hide([OV.phaseBox, OV.dayBox, OV.inset, OV.dragHint, OV.mission, OV.start]);
+      tl.to(S, { ...home, phi: nearest(beat.phase) }, 0);
+      viewText(tl, 'fromEarth', 0); show(tl, OV.viewLabel, true, .3);
+      show(tl, OV.glow, true, .6); drawRays(tl, 1.0);
+      break;
+    case 'side':
+      hide([OV.glow, OV.rays, OV.phaseBox, OV.dayBox, OV.dragHint, OV.mission]);
+      tl.set(insetArc, { opacity:0 }, 0);
+      tl.to(S, { ...home, phi: nearest(beat.phase) }, 0);
+      viewText(tl, 'fromEarth', 0); show(tl, OV.viewLabel, true, .3);
+      show(tl, OV.inset, true, .5);
+      tl.to(S, { camA: beat.cameraArc, camEl:6, duration:D(2.6), ease:'power2.inOut' }, 1.4);
+      viewText(tl, 'fromSide', 2.4);
+      show(tl, OV.glow, true, 2.4); drawRays(tl, 2.8);
+      show(tl, [OV.glow, OV.rays], false, 7.2);
+      tl.to(S, { camA:0, camEl:0, duration:D(2.4), ease:'power2.inOut' }, 7.4);
+      viewText(tl, 'fromEarth', 8.4);
+      break;
+    case 'phases': {
+      hide([OV.glow, OV.rays, OV.dayBox, OV.dragHint, OV.mission]);
+      const t0 = nearest(beat.sweep[0]); cycleT0 = t0;
+      tl.set(insetArc, { opacity:0 }, 0);
+      tl.to(S, { ...home, phi:t0 }, 0);
+      viewText(tl, 'fromEarth', 0); show(tl, OV.viewLabel, true, .3);
+      show(tl, OV.inset, true, .5); show(tl, OV.phaseBox, true, 1.2);
+      for (let k = 0; k < 4; k++) tl.to(S, { phi: t0 + (k + 1) * 90, duration:D(3.2), ease:'power1.inOut' }, 1.6 + k * 3.4);
+      break;
+    }
+    case 'cycle': {
+      hide([OV.glow, OV.rays, OV.dragHint, OV.mission]);
+      const t0 = nearest(beat.sweep[0]); cycleT0 = t0;
+      tl.to(S, { ...home, phi:t0 }, 0);
+      viewText(tl, 'fromEarth', 0); show(tl, OV.viewLabel, true, .3);
+      show(tl, OV.inset, true, .4);
+      tl.to(insetArc, { opacity:1, duration:D(.5) }, .8);
+      show(tl, [OV.phaseBox, OV.dayBox], true, .8);
+      tl.to(S, { phi: t0 + 360, duration:D(10.4), ease:'none' }, 1.3);
+      break;
+    }
+    case 'artemis':
+      hide([OV.glow, OV.rays, OV.phaseBox, OV.dayBox, OV.inset, OV.viewLabel]);
+      tl.to(S, { ...home, phi: nearest(beat.phase) }, 0);
+      show(tl, OV.mission, true, .8);
+      show(tl, OV.dragHint, true, 1.4);
+      tl.call(() => { controls.enabled = true; stage.classList.add('grab'); }, null, 1.6);
+      tl.to(S, { spin: S.spin + 1.1, duration:D(beat.dur - 1.6), ease:'none' }, 1.6);
+      break;
+  }
+  return tl;
+}
+controls.addEventListener('start', () => {
+  gsap.killTweensOf(S, 'spin');
+  gsap.killTweensOf(OV.dragHint);
+  gsap.to(OV.dragHint, { autoAlpha:0, duration:D(.5) });
+});
+
+/* ═══════════ 9. Flow: lesson → questions ═══════════ */
+const quizEl = $('quiz'), qTextEl = $('qText'), micEl = $('mic'), micLabel = $('micLabel'),
+      heardEl = $('heard'), feedbackEl = $('feedback'), choicesEl = $('choices');
+
+let animDone = false, voiceDone = false;
+function maybeNext(){
+  if (mode !== 'lesson' || !animDone || !voiceDone) return;
+  clearMarks();
+  cur++;
+  if (cur < BEATS.length) startBeat(cur); else startQuiz();
+}
+function startBeat(i){
+  mode = 'lesson'; cur = i;
+  animDone = voiceDone = false;
+  setProgress(i);
+  quizEl.hidden = true; narrationEl.hidden = false;
+  stage.classList.remove('tap');
+  updateButton();
+  const t = buildBeat(i);
+  t.eventCallback('onComplete', () => { animDone = true; maybeNext(); });
+  renderText(narrationEl, L('b' + i));
+  speak(SAY('b' + i), { onWord:markWord, onEnd:() => { voiceDone = true; maybeNext(); } }, 'b' + i);
+}
+
+function quizStage(){
+  resetStage();
+  if (tl) tl.kill();
+  tl = gsap.timeline();
+  show(tl, [OV.glow, OV.rays, OV.phaseBox, OV.dayBox, OV.inset, OV.viewLabel, OV.dragHint, OV.mission, OV.start], false, 0);
+  tl.to(S, { phi: nearest(180), camA:0, camEl:0, duration:D(1.4), ease:'power2.inOut' }, 0);
+  tl.to(S, { spin: S.spin + 6, duration:240, ease:'none' }, 0);
+}
+
+function startQuiz(){
+  mode = 'quiz'; qi = 0; score = 0;
+  quizStage();
+  askQuestion();
+}
+
+/* Peršokimas: paspaudus juostą apačioje. Patogu mokytojui pasitikrinti klausimus. */
+function jumpTo(n){
+  unlockAudio();
+  askMic();
+  stopSpeak(); listenSeq++; stopListen();
+  paused = false; resumeAction = null;
+  document.body.classList.remove('paused');
+  micEl.classList.remove('live'); micLabel.textContent = '';
+  noteEl.textContent = '';
+  gsap.set(OV.start, { autoAlpha:0 });
+  if (n < BEATS.length){
+    startBeat(n);
+  } else {
+    mode = 'quiz'; qi = n - BEATS.length; score = 0;
+    quizStage();
+    askQuestion();
+  }
+}
+
+function askQuestion(){
+  setProgress(BEATS.length + qi);
+  narrationEl.hidden = true; quizEl.hidden = false;
+  choicesEl.hidden = true; choicesEl.innerHTML = '';
+  heardEl.textContent = ''; feedbackEl.textContent = ''; feedbackEl.className = 'feedback';
+  micEl.classList.remove('live'); micLabel.textContent = '';
+  listenSeq++; answered = false;
+  updateButton();
+  renderText(qTextEl, L('q' + qi));
+  speak(SAY('q' + qi), { onWord:markWord, onEnd:() => { clearMarks(); startListening(0); } }, 'q' + qi);
+}
+
+function startListening(attempt){
+  if (mode !== 'quiz' || paused || answered) return;
+  if (micReady === false) return showChoices(true);
+  const seq = ++listenSeq;
+  const alive = () => seq === listenSeq && mode === 'quiz' && !paused && !answered;
+  micEl.classList.add('live');
+  micLabel.textContent = T.ui.listening;
+  if (DIAG) noteEl.textContent = 'mikrofonas: bandau klausytis (' + (lang === 'lt' ? 'lt-LT' : 'en-US') + ', bandymas ' + (attempt + 1) + ')';
+
+  const giveUp = err => {
+    if (!alive()) return;
+    if (DIAG) noteEl.textContent = 'mikrofonas: ' + err + ' · kalba ' + (lang === 'lt' ? 'lt-LT' : 'en-US');
+    micEl.classList.remove('live'); micLabel.textContent = '';
+    const noMic = err === 'not-allowed' || err === 'nosupport' || err === 'service-not-allowed';
+    if (!noMic && attempt === 0) speak(SAY('again'), { onEnd: () => startListening(1) }, 'again');
+    else showChoices(noMic);
+  };
+
+  listen({
+    onPartial: txt => { if (alive()) heardEl.innerHTML = T.ui.heard + '<b>' + txt + '</b>'; },
+    onResult: alts => {
+      if (!alive()) return;
+      const said = alts.map(a => (a || '').trim()).filter(Boolean);
+      if (!said.length) return giveUp('nomatch');       // tyla nera klaidingas atsakymas
+      listenSeq++; answered = true;
+      micEl.classList.remove('live'); micLabel.textContent = '';
+      heardEl.innerHTML = T.ui.heard + '<b>' + said[0] + '</b>';
+      judge(isCorrect(said, T.answers[qi].accept));
+    },
+    onFail: giveUp
+  });
+}
+
+function showChoices(noMic){
+  const q = T.answers[qi];
+  micLabel.textContent = '';
+  if (noMic){ noteEl.textContent = T.noMic; }   // nieko nesakome balsu - mygtukai matosi patys
+  choicesEl.hidden = false; choicesEl.innerHTML = '';
+  q.choices.forEach(c => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = c.t;
+    b.onclick = () => {
+      listenSeq++; answered = true; stopListen();
+      heardEl.innerHTML = T.ui.heard + '<b>' + c.t + '</b>';
+      choicesEl.hidden = true; judge(c.ok);
+    };
+    choicesEl.appendChild(b);
+  });
+}
+
+function judge(ok){
+  if (ok) score++;
+  const msg = L((ok ? 'ok' : 'no') + qi);
+  feedbackEl.className = 'feedback ' + (ok ? 'good' : 'bad');
+  feedbackEl.innerHTML = '<span class="mark">' + (ok ? '✓' : '→') + '</span>';
+  const span = document.createElement('span');
+  feedbackEl.appendChild(span);
+  renderText(span, msg);
+  const advance = () => {
+    if (mode !== 'quiz') return;
+    qi++;
+    if (qi < NQ) askQuestion(); else finish();
+  };
+  speak(SAY((ok ? 'ok' : 'no') + qi), { onWord:markWord, onEnd: () => {
+    clearMarks();
+    setTimeout(() => {
+      if (paused) { resumeAction = advance; return; }
+      advance();
+    }, 900);
+  }}, (ok ? 'ok' : 'no') + qi);
+}
+
+function finish(){
+  mode = 'done';
+  setProgress(BEATS.length + NQ);
+  quizEl.hidden = true; narrationEl.hidden = false;
+  stage.classList.add('tap');
+  updateButton();
+  gsap.to(OV.start, { autoAlpha:1, duration:D(.6) });
+  const msg = L('done' + score);
+  renderText(narrationEl, msg);
+  speak(SAY('done' + score), { onWord:markWord, onEnd:clearMarks }, 'done' + score);
+}
+
+function showIntro(){
+  mode = 'intro'; cur = 0; qi = 0; score = 0;
+  paused = false; resumeAction = null;
+  document.body.classList.remove('paused');
+  if (tl) tl.kill();
+  stopSpeak(); stopListen();
+  setProgress(0);
+  quizEl.hidden = true; narrationEl.hidden = false;
+  stage.classList.add('tap');
+  updateButton();
+  noteEl.textContent = T.micNote;
+  gsap.set([OV.glow, OV.rays, OV.phaseBox, OV.dayBox, OV.inset, OV.viewLabel, OV.dragHint, OV.mission], { autoAlpha:0 });
+  gsap.set(OV.start, { autoAlpha:1 });
+  S.phi = 108; S.camA = 0; S.camEl = 0;
+  gsap.to(S, { spin: S.spin + 6, duration:260, ease:'none' });
+  renderText(narrationEl, L('intro'));
+}
+
+function begin(){
+  if (mode !== 'intro' && mode !== 'done') return;
+  unlockAudio();                 // telefonams: atrakinti grotuva paspaudimo metu
+  askMic();                      // paspaudimo metu - kol naršyklė dar leidžia klausti
+  paused = false; resumeAction = null;
+  document.body.classList.remove('paused');
+  noteEl.textContent = T.micNote;
+  gsap.to(OV.start, { autoAlpha:0, duration:D(.4) });
+  score = 0; qi = 0;
+  startBeat(0);
+}
+stage.addEventListener('click', () => { if (mode === 'intro' || mode === 'done') begin(); });
+
+/* ═══════════ 10. The one button: Start / Stop / Resume ═══════════ */
+function updateButton(){
+  if (mode === 'intro' || mode === 'done'){ mainBtn.textContent = T.ui.btnStart; mainBtn.classList.add('go'); }
+  else if (paused){ mainBtn.textContent = T.ui.btnResume; mainBtn.classList.add('go'); }
+  else { mainBtn.textContent = T.ui.btnStop; mainBtn.classList.remove('go'); }
+}
+function setPaused(on){
+  paused = on;
+  document.body.classList.toggle('paused', on);
+  if (on){
+    if (tl) tl.pause();
+    if (curAudio) try { curAudio.pause(); } catch(e){}
+    if (fakeTimer){ clearInterval(fakeTimer); fakeTimer = null; }
+    if (window.speechSynthesis) try { speechSynthesis.pause(); } catch(e){}
+    wasListening = micEl.classList.contains('live');
+    listenSeq++; stopListen();
+    micEl.classList.remove('live'); micLabel.textContent = '';
+    noteEl.textContent = T.ui.paused;
+  } else {
+    noteEl.textContent = T.micNote;
+    if (tl) tl.resume();
+    if (curAudio) { const p = curAudio.play(); if (p && p.catch) p.catch(() => {}); }
+    if (fakeState && !fakeTimer) runFake();
+    if (window.speechSynthesis) try { speechSynthesis.resume(); } catch(e){}
+    if (resumeAction){ const a = resumeAction; resumeAction = null; a(); }
+    else if (mode === 'quiz' && wasListening) startListening(0);
+  }
+  updateButton();
+}
+mainBtn.addEventListener('click', () => {
+  if (mode === 'intro' || mode === 'done') begin();
+  else setPaused(!paused);
+});
+
+/* ═══════════ 10b. Antras mygtukas: LT ⇄ EN ═══════════ */
+function applyLang(){
+  T = UI[lang];
+  document.documentElement.lang = lang;
+  $('brand').textContent = T.brand;
+  $('langBtn').textContent = lang === 'lt' ? 'EN' : 'LT';
+  $('phaseEb').textContent = T.ui.phase;
+  $('dayEb').textContent = T.ui.day;
+  $('raysLabel').textContent = T.ui.rays;
+  $('insetSunLbl').textContent = T.ui.sun;
+  $('insetEarthLbl').textContent = T.ui.earth;
+  $('insetOrbitLbl').textContent = T.ui.orbit;
+  $('dragHint').textContent = T.ui.drag;
+  $('missionTitle').textContent = T.ui.mission;
+  $('missionSub').textContent = T.ui.missionSub;
+  $('startHintText').textContent = T.ui.start;
+  $('viewLabel').textContent = T.ui.fromEarth;
+  phaseName.textContent = phaseFor(S.phi);
+  if (!paused) noteEl.textContent = T.micNote;
+  updateButton();
+}
+$('langBtn').addEventListener('click', () => {
+  lang = lang === 'lt' ? 'en' : 'lt';
+  stopSpeak(); listenSeq++; stopListen();
+  micEl.classList.remove('live'); micLabel.textContent = '';
+  applyLang();
+  if (mode === 'lesson') startBeat(cur);          // ta pati dalis, kita kalba
+  else if (mode === 'quiz') askQuestion();
+  else showIntro();
+});
+
+/* ═══════════ 11. Start ═══════════ */
+for (const code of ['en','lt']){
+  LINES[code] = await fetch('lines.' + code + '.json').then(r => r.json()).catch(() => ({}));
+  try {
+    const m = await fetch('audio/' + code + '/manifest.json', { cache:'no-cache' }).then(r => r.ok ? r.json() : null);
+    if (m && Array.isArray(m.ids)) m.ids.forEach(id => { AUDIO[code][id] = 'audio/' + code + '/' + id + '.mp3'; });
+  } catch(e){ /* irasu nera – kalbes serveris arba narsykle */ }
+}
+
+await (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
+if (window.speechSynthesis && !voices.length){
+  await new Promise(r => { const t = setTimeout(r, 800); speechSynthesis.addEventListener('voiceschanged', () => { clearTimeout(t); r(); }, { once:true }); });
+  loadVoices();
+}
+applyLang();
+showIntro();
+</script>
+</body>
+</html>
