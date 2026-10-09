@@ -64,7 +64,7 @@ def build(lang, force):
         made += 1
         print("  %s/%-7s %s" % (lang, key, text[:56]))
     ids = sorted(k[:-4] for k in os.listdir(out) if k.endswith(".mp3"))
-    json.dump({"voice": server.EL_STATE["voice"], "model": server.EL_STATE["model"], "ids": ids},
+    json.dump({"voice": server.el_voice_id(lang), "model": server.EL_STATE["model"], "ids": ids},
               open(os.path.join(out, "manifest.json"), "w", encoding="utf-8"), indent=2)
     size = sum(os.path.getsize(os.path.join(out, i + ".mp3")) for i in ids)
     print("  %s: irasyta %d, seni %d, viso %d (%.1f MB)" % (lang, made, kept, len(ids), size / 1048576))
