@@ -200,7 +200,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             text = (qs.get("q") or [""])[0].strip()
             tl = (qs.get("tl") or ["lt"])[0]
-            if tl not in ("lt", "en"):
+            if tl not in ("lt", "en", "ro"):
                 tl = "lt"
             if not text:
                 self.send_error(400, "no text"); return

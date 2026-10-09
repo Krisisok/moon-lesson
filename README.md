@@ -4,7 +4,7 @@
 
 Pamoka mokiniui apie Mėnulio fazes: sukasi vizualas, balsas pasakoja, gale — trys klausimai, į kuriuos atsakoma balsu. Pritaikyta disleksiją turintiems vaikams: pirmiausia vaizdas ir garsas, tekstas paryškinamas žodis po žodžio tiems, kas skaito.
 
-Du mygtukai: **LT/EN** ir **Start / Stop**. Pamoką pradeda ir Mėnulio palietimas. Apatinė juosta peršoka į bet kurią dalį.
+Du mygtukai: **LT / EN / RO** (suka ratu) ir **Start / Stop**. Pamoką pradeda ir Mėnulio palietimas. Apatinė juosta peršoka į bet kurią dalį.
 
 Maža pamoka mokiniui: vizualas + balsas + klausimai balsu.
 Pritaikyta disleksiją turintiems vaikams (vaizdas ir garsas pirmiau, tekstas — tik kas gerai skaito).
@@ -67,5 +67,6 @@ Du: **LT/EN** ir **Start / Stop / Resume**. Pamoką taip pat pradeda palietus M�
 
 ## Kalbos
 
-Abi: anglų ir lietuvių. Balsas — ElevenLabs **Lily**, modelis **eleven_v4** (85 kalbos, tarp jų lietuvių).
-Sakiniai: `lines.en.json`, `lines.lt.json`. Garsas: `audio/en/`, `audio/lt/`.
+Trys: anglų, lietuvių, rumunų. Modelis **eleven_v4** (85 kalbos).
+Balsai: **Lily** anglų, **Matilda** lietuvių ir rumunų — nurodyti `balsai.json`.
+Sakiniai: `lines.<kalba>.json`. Garsas: `audio/<kalba>/`.

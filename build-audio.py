@@ -17,7 +17,7 @@ skriptas pats issitraukia sakinius is index.html i lines.en.json.
 import json, os, sys, urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-LANGS = ("en", "lt")
+LANGS = ("en", "lt", "ro")
 sys.path.insert(0, ROOT)
 import server  # noqa: E402  (raktas, balso parinkimas, el_tts)
 

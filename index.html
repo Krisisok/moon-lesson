@@ -234,9 +234,11 @@ import { MOON_TEXTURES } from './moon-assets.js';
    4 astronauts, 10 days, 700,000 miles around the Moon.
    Lithuanian version is parked until we have a good Lithuanian voice. */
 
-let lang = 'en';                  // perjungiamas LT/EN mygtuku
-let LINES = { en:{}, lt:{} };     // kalbami sakiniai - is lines.<lang>.json
-let AUDIO = { en:{}, lt:{} };     // irasyti mp3, jei yra (zr. build-audio.py)
+const LANGS = ['en', 'lt', 'ro'];   // mygtukas suka ratu
+let lang = 'en';
+let LINES = { en:{}, lt:{}, ro:{} };   // kalbami sakiniai - is lines.<lang>.json
+let AUDIO = { en:{}, lt:{}, ro:{} };   // irasyti mp3, jei yra (zr. build-audio.py)
+const ASR = { en:'en-US', lt:'lt-LT', ro:'ro-RO' };
 
 const UI = {
   en: {
@@ -280,6 +282,27 @@ const UI = {
     noMic: 'Mikrofono nėra. Paliesk atsakymą.',
     micNote: '',   // uzuominos apie mikrofona nerodome
     noVoiceNote: 'Balso šiame kompiuteryje nėra – pamoka veikia, tekstas rodomas ir paryškinamas.'
+  },
+  ro: {
+    brand: 'EditAI · Științe · Clasa a 6-a',
+    phases: ['Lună nouă','Primul pătrar','Lună plină','Ultimul pătrar'],
+    ui: { phase:'Faza', day:'Ziua', rays:'LUMINA SOARELUI', sun:'Soare', earth:'Pământ',
+          orbit:'Orbita Lunii', fromEarth:'Vedere de pe Pământ', fromSide:'Vedere din lateral',
+          drag:'↔ rotește', mission:'O călătorie în jurul Lunii', missionSub:'4 astronauți · 10 zile',
+          start:'▶ Atinge Luna', listening:'Ascult…', heard:'Am auzit: ',
+          btnStart:'▶ Start', btnStop:'■ Stop', btnResume:'▶ Continuă',
+          paused:'Lecția este oprită. Apasă „Continuă".' },
+    answers: [
+      { accept:['nu','nu straluceste','reflecta'],
+        choices:[{t:'Da',ok:false},{t:'Nu',ok:true}] },
+      { accept:['plina','luna plina'],
+        choices:[{t:'Lună nouă',ok:false},{t:'Lună plină',ok:true},{t:'Ultimul pătrar',ok:false}] },
+      { accept:['10','zece'],
+        choices:[{t:'3',ok:false},{t:'10',ok:true},{t:'30',ok:false}] }
+    ],
+    noMic: 'Nu există microfon. Atinge răspunsul.',
+    micNote: '',
+    noVoiceNote: 'Nu există voce pe acest calculator – lecția merge, textul este evidențiat.'
   }
 };
 
@@ -525,7 +548,7 @@ let rec = null, recTimer = null;
 function listen({ onPartial, onResult, onFail }){
   if (!SR) return onFail('nosupport');
   try { rec = new SR(); } catch(e){ return onFail('nosupport'); }
-  rec.lang = lang === 'lt' ? 'lt-LT' : 'en-US';
+  rec.lang = ASR[lang] || 'en-US';
   rec.interimResults = true; rec.maxAlternatives = 3; rec.continuous = false;
   let got = false, alts = [];
   rec.onresult = e => {
@@ -626,7 +649,9 @@ function overlays(){
   const frac = Math.max(0, Math.min(1, (a - cycleT0) / 360));
   insetArc.style.strokeDashoffset = String(1 - frac);
   if (frac >= .999){
-    dayNum.innerHTML = lang === 'lt' ? '≈ 29,5 <small>paros</small>' : '≈ 29.5 <small>days</small>';
+    dayNum.innerHTML = lang === 'lt' ? '≈ 29,5 <small>paros</small>'
+                     : lang === 'ro' ? '≈ 29,5 <small>zile</small>'
+                     : '≈ 29.5 <small>days</small>';
   } else {
     const d = Math.min(29, Math.floor(frac * CYCLE_DAYS) + 1);
     const t = lang === 'lt' ? ordinalLT(d) : String(d);
@@ -979,7 +1004,7 @@ function applyLang(){
   T = UI[lang];
   document.documentElement.lang = lang;
   $('brand').textContent = T.brand;
-  $('langBtn').textContent = lang === 'lt' ? 'EN' : 'LT';
+  $('langBtn').textContent = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length].toUpperCase();
   $('phaseEb').textContent = T.ui.phase;
   $('dayEb').textContent = T.ui.day;
   $('raysLabel').textContent = T.ui.rays;
@@ -996,7 +1021,7 @@ function applyLang(){
   updateButton();
 }
 $('langBtn').addEventListener('click', () => {
-  lang = lang === 'lt' ? 'en' : 'lt';
+  lang = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
   stopSpeak(); listenSeq++; stopListen();
   micEl.classList.remove('live'); micLabel.textContent = '';
   applyLang();
@@ -1006,7 +1031,7 @@ $('langBtn').addEventListener('click', () => {
 });
 
 /* ═══════════ 11. Start ═══════════ */
-for (const code of ['en','lt']){
+for (const code of LANGS){
   LINES[code] = await fetch('lines.' + code + '.json').then(r => r.json()).catch(() => ({}));
   try {
     const m = await fetch('audio/' + code + '/manifest.json', { cache:'no-cache' }).then(r => r.ok ? r.json() : null);

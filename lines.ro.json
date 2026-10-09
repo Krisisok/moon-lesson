@@ -1,0 +1,29 @@
+{
+  "intro": "O lecție despre Lună. Atinge Luna și începem.",
+  "b0": "Luna nu strălucește singură. Ea reflectă lumina Soarelui, ca o oglindă.",
+  "b1": "Soarele luminează mereu o jumătate a Lunii. De pe Pământ vedem doar o parte din acea jumătate luminată.",
+  "b2": "De aceea Luna pare să își schimbe forma. Aceste forme se numesc faze: lună nouă, primul pătrar, lună plină și ultimul pătrar. Iată toate cele patru.",
+  "b3": "Tot ciclul fazelor durează aproximativ douăzeci și nouă de zile și jumătate. Este aproape o lună.",
+  "b4": {
+    "text": "În misiunea Artemis II patru astronauți zboară în jurul Lunii. Zborul durează zece zile. În acest timp Luna nu apucă să parcurgă tot ciclul fazelor.",
+    "say": "În misiunea Artemis doi patru astronauți zboară în jurul Lunii. Zborul durează zece zile. În acest timp Luna nu apucă să parcurgă tot ciclul fazelor."
+  },
+  "q0": "Prima întrebare. Luna strălucește singură?",
+  "ok0": "Corect. Luna nu strălucește singură. Ea reflectă lumina Soarelui.",
+  "no0": "Nu chiar. Luna nu strălucește singură. Ea doar reflectă lumina Soarelui, ca o oglindă care reflectă o lampă.",
+  "q1": "A doua întrebare. Cum se numește faza în care vedem toată Luna luminată?",
+  "ok1": "Corect. Este lună plină.",
+  "no1": "Se numește lună plină. Atunci Soarele luminează exact partea Lunii pe care o vedem de pe Pământ.",
+  "q2": {
+    "text": "A treia întrebare. Câte zile durează zborul misiunii Artemis II în jurul Lunii?",
+    "say": "A treia întrebare. Câte zile durează zborul misiunii Artemis doi în jurul Lunii?"
+  },
+  "ok2": "Corect. Zece zile.",
+  "no2": "Zborul durează zece zile. Este aproximativ o treime din tot ciclul fazelor Lunii.",
+  "again": "Nu te-am auzit. Spune încă o dată.",
+  "tap": "Nu aud microfonul. Atinge răspunsul corect.",
+  "done0": "Bravo că ai încercat! Gata. Ai răspuns corect la 0 din 3. Atinge Luna și mai încearcă o dată.",
+  "done1": "Bravo că ai încercat! Gata. Ai răspuns corect la 1 din 3. Atinge Luna și mai încearcă o dată.",
+  "done2": "Super! Gata. Ai răspuns corect la 2 din 3. Atinge Luna dacă vrei încă o dată.",
+  "done3": "Super! Gata. Ai răspuns corect la 3 din 3. Atinge Luna dacă vrei încă o dată."
+}

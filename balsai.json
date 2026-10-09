@@ -1,4 +1,14 @@
 {
-  "en": { "id": "pFZP5JQG7iQjIQuC4Bku", "vardas": "Lily" },
-  "lt": { "id": "XrExE9yKIg1WjnnlVkGX", "vardas": "Matilda" }
+  "en": {
+    "id": "pFZP5JQG7iQjIQuC4Bku",
+    "vardas": "Lily"
+  },
+  "lt": {
+    "id": "XrExE9yKIg1WjnnlVkGX",
+    "vardas": "Matilda"
+  },
+  "ro": {
+    "id": "XrExE9yKIg1WjnnlVkGX",
+    "vardas": "Matilda"
+  }
 }
